@@ -24,8 +24,29 @@ export class UsuariosService {
 
   // función asincrona, o bloquean la ejecución del programa. await, espera a que la promesa guardar en la bd se resuelva
   async create(createUsuarioDto: CreateUsuarioDto) {
-    const usuario = this.usuarioRepository.create(createUsuarioDto); // crea un objeto de entity Usuario
-    return await this.usuarioRepository.save(usuario); // guarda el entity en la bd
+
+    let randomId: number;
+    let usuarioExistente: Usuario | null;
+
+    do {
+      // Genera número aleatorio de 5 dígitos (entre 10000 y 99999) = 90000 posibilidades
+      randomId = Math.floor(10000 + Math.random() * 90000);
+      usuarioExistente = await this.usuarioRepository.findOneBy({ id: randomId }); // busca existencia en bd
+
+    } while (usuarioExistente);
+
+    // Crear un nuevo usuario con ID aleatorio
+    const usuario = this.usuarioRepository.create({
+      id: randomId, // asigna el id aleatorio
+      ...createUsuarioDto, // asigna el resto del dto
+    });
+
+    try {
+      return await this.usuarioRepository.save(usuario); // guarda el entity en la bd
+    } catch (error) {
+      throw new Error(`Error al crear usuario: ${error.message}`);
+    }
+
   }
 
   async findAll() {

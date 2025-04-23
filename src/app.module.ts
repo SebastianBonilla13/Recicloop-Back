@@ -20,7 +20,7 @@ import { RecoleccionModule } from './recoleccion/recoleccion.module';
       /* entities: [], */
       autoLoadEntities: true, // Carga automáticamente las entidades
       synchronize: true,  // desactivadas para usar migraciones
-      /* dropSchema: true, */  // Elimina y recrea el esquema
+      /* dropSchema: true, */  // Elimina y recrea el esquema | O reiniciar bd
       /* logging: true,  */
 
 
