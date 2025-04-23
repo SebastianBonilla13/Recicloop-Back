@@ -2,7 +2,8 @@ import { IsEmpty } from "class-validator";
 /* import { PuntoReciclaje } from "src/punto-reciclajes/entities/punto-reciclaje.entity"; */
 import { PuntoReciclaje } from "../../punto-reciclajes/entities/punto-reciclaje.entity";
 import { Column, DeleteDateColumn, Entity, IsNull, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { UsuarioPuntoReciclaje } from "src/punto-reciclajes/entities/usuario-punto-reciclaje.entity";
+/* import { UsuarioPuntoReciclaje } from "src/punto-reciclajes/entities/usuario-punto-reciclaje.entity"; */
+import { Recoleccion } from "src/recoleccion/entities/recoleccion.entity";
 
 @Entity('usuario')
 export class Usuario {
@@ -25,10 +26,12 @@ export class Usuario {
     @DeleteDateColumn()
     deletedAt?: Date; // Columna para eliminaciones suaves
 
-    /* @ManyToMany(() => PuntoReciclaje, (puntoReciclaje) => puntoReciclaje.usuarios, {eager: true}) // eager: true para cargar los puntos reciclaje relacionados
-    puntosVisitados: PuntoReciclaje[]; */
+    /* @OneToMany(() => UsuarioPuntoReciclaje, (visita) => visita.usuario)
+    visitas: UsuarioPuntoReciclaje[]; */
 
-    @OneToMany(() => UsuarioPuntoReciclaje, (visita) => visita.usuario)
-    visitas: UsuarioPuntoReciclaje[];
+    @OneToMany(() => Recoleccion, (recoleccion) => recoleccion.usuario)
+    recolecciones: Recoleccion[];
+
+
 
 }

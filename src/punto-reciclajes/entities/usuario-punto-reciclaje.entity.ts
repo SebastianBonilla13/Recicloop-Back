@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from "typeorm";
+/* import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from "typeorm";
 import { Usuario } from "../../usuarios/entities/usuario.entity";
 import { PuntoReciclaje } from "../../punto-reciclajes/entities/punto-reciclaje.entity";
 
@@ -28,3 +28,4 @@ export class UsuarioPuntoReciclaje {
   @JoinColumn({ name: 'puntoReciclajeId' })
   puntoReciclaje: PuntoReciclaje;
 }
+ */

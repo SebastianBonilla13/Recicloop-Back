@@ -32,21 +32,22 @@ export class UsuariosController {
     return this.usuariosService.remove(+id);
   }
 
-  @Get('puntos-visitados/:id')
+  /* @Get('puntos-visitados/:id')
   findPuntosVisitados(@Param('id') id: number) {
     return this.usuariosService.findPuntosVisitados(+id);
+  } */
+
+  @Get(':id/historial-recolecciones')
+  findHistorialRecolecciones(@Param('id') idUsuario: number) {
+  return this.usuariosService.findHistorialRecolecciones(+idUsuario);
   }
 
-  @Get('historial-puntos-visitados/:id')
-  findHistorialPuntosVisitados(@Param('id') id: number) {
-  return this.usuariosService.findHistorialPuntosVisitados(+id);
-}
-
-  @Post(':idUsuario/:idPuntoReciclaje/:puntosObtenidos')
+  /* @Post(':idUsuario/:idPuntoReciclaje/:puntosObtenidos')
   addPuntoReciclaje(@Param('idUsuario') idUsuario: number, @Param('idPuntoReciclaje') idPuntoReciclaje: number, @Param('puntosObtenidos') puntosObtenidos: number) {
     return this.usuariosService.addPuntoReciclaje(idUsuario, idPuntoReciclaje, puntosObtenidos);
-  }
+  } */
   
+    
 
   
 
