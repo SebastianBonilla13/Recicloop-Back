@@ -16,16 +16,16 @@ export class CreateDetalleRecoleccionDto {
     @Max(999999.99)
     longitudProducto: number;
     
-    @IsNotEmpty()
+    /* @IsNotEmpty()
     @IsNumber()
     @Min(0)
     @Max(99)
-    puntos: number;
+    puntos: number; */
     
-    @IsNotEmpty()
+    /* @IsNotEmpty()
     @IsNumber()
     @Min(0.001)
     @Max(99.99)
-    peso: number;
+    peso: number; */
     
 }

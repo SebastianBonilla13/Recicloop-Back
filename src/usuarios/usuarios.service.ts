@@ -73,14 +73,37 @@ export class UsuariosService {
     });
   } */
 
-  async findHistorialRecolecciones(idUsuario: number) {
+  /* async findHistorialRecolecciones(idUsuario: number) {
     return await this.recoleccionRepository.find({
       where: {
         usuarioId: idUsuario
       },
-      select: ['id', 'usuarioId', 'puntoReciclajeId', 'fechaInicio', 'fechaFin', 'puntosTotales', 'completado'],
-      relations: ['detalles'],
+      select: ['id', 'usuarioId', 'puntoReciclajeId', 'fechaInicio', 'fechaFin', 'numeroBotellas', 'puntosTotales', 'completado'],
+      relations: ['detalles', 'puntoReciclaje'],
     });
+  } */
+    async findHistorialRecolecciones(idUsuario: number) {
+      return await this.recoleccionRepository.find({
+          where: {
+              usuarioId: idUsuario
+          },
+          select: {
+              id: true,
+              usuarioId: true,
+              puntoReciclajeId: true,
+              fechaInicio: true,
+              fechaFin: true,
+              numeroBotellas: true,
+              puntosTotales: true,
+              completado: true,
+              puntoReciclaje: {
+                  /* id: true, */
+                  nombre: true,
+                  ubicacion: true,
+              }
+          },
+          relations: ['detalles', 'puntoReciclaje'], // Incluye la relación con PuntoReciclaje
+      });
   }
 
 }

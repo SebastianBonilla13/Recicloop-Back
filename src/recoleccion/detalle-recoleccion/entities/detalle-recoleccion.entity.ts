@@ -18,8 +18,8 @@ export class DetalleRecoleccion {
     @Column({ type: 'int' })
     puntos: number;
 
-    @Column({ type: 'decimal', precision: 10, scale: 2 })
-    peso: number;
+    /* @Column({ type: 'decimal', precision: 10, scale: 2 })
+    peso: number; */
 
     @ManyToOne(() => Recoleccion, recoleccion => recoleccion.detalles)
     @JoinColumn({ name: 'recoleccionId' })

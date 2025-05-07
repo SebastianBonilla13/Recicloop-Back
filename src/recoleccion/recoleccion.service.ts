@@ -23,7 +23,10 @@ export class RecoleccionService {
   }
 
   async findAll() {
-    return await this.recoleccionRepository.find();
+    /* return await this.recoleccionRepository.find(); */
+    return await this.recoleccionRepository.find({
+      relations: ['detalles'], // Incluye la relación con los detalles
+    });
   }
 
   async findOne(id: number) {
@@ -84,12 +87,19 @@ export class RecoleccionService {
     // Crear nuevo detalle de recolección
     const nuevoDetalle = this.detalleRecoleccionRepository.create({
       /* recoleccionId, */
-      ...detalleDto,
+      /* ...detalleDto, */
+      recoleccionId: detalleDto.recoleccionId,
+      longitudProducto: detalleDto.longitudProducto,
+      puntos: calcularPuntos(detalleDto.longitudProducto),
+
       fechaHora: new Date()
     });
 
     // Guardar detalle en la bd
     await this.detalleRecoleccionRepository.save(nuevoDetalle);
+
+    // Actualizar número de botellas recicladas
+    recoleccion.numeroBotellas += 1;
 
     // Actualizar puntos totales
     recoleccion.puntosTotales += nuevoDetalle.puntos;
@@ -117,6 +127,24 @@ export class RecoleccionService {
     recoleccion.completado = true;
 
     return await this.recoleccionRepository.save(recoleccion);
+  }
+}
+
+function calcularPuntos(longitudProducto: number): number {
+
+  if (longitudProducto <= 0) {
+    throw new Error('La longitud del producto debe ser mayor a 0');
+  }
+
+  // Calcular puntos
+  if (longitudProducto < 10) {
+    return 1; // Prqueño
+  } else if (longitudProducto < 15) {
+    return 5; // Mediano-pequeño
+  } else if (longitudProducto < 20) {
+    return 10; // Mediano
+  } else {
+    return 15; // Grande
   }
 
 }

@@ -11,7 +11,7 @@ export class DetalleRecoleccionService {
   constructor(
     @InjectRepository(DetalleRecoleccion)
     private readonly detalleRecoleccionRepository: Repository<DetalleRecoleccion>
-  ) {}
+  ) { }
 
   async create(createDetalleRecoleccionDto: CreateDetalleRecoleccionDto) {
     return await this.detalleRecoleccionRepository.save(createDetalleRecoleccionDto);
@@ -22,7 +22,7 @@ export class DetalleRecoleccionService {
   }
 
   async findOne(id: number) {
-    return await this.detalleRecoleccionRepository.findOneBy({id});
+    return await this.detalleRecoleccionRepository.findOneBy({ id });
   }
 
   async update(id: number, updateDetalleRecoleccionDto: UpdateDetalleRecoleccionDto) {
@@ -33,3 +33,6 @@ export class DetalleRecoleccionService {
     return await this.detalleRecoleccionRepository.softDelete(id);
   }
 }
+
+
+

@@ -22,6 +22,9 @@ export class Recoleccion {
     fechaFin: Date;
 
     @Column({ type: 'int', default: 0 })
+    numeroBotellas: number;
+
+    @Column({ type: 'int', default: 0 })
     puntosTotales: number;
 
     @Column({ type: 'boolean', default: false })
