@@ -5,6 +5,9 @@ import { UsuariosModule } from './usuarios/usuarios.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PuntoReciclajesModule } from './punto-reciclajes/punto-reciclajes.module';
 import { RecoleccionModule } from './recoleccion/recoleccion.module';
+import { RecoleccionMqttController } from './mqtt/recoleccion-mqtt/recoleccion-mqtt.controller';
+import { RecoleccionMqttModule } from './mqtt/recoleccion-mqtt/recoleccion-mqtt.module';
+import { RecoleccionService } from './recoleccion/recoleccion.service';
 
 @Module({
   imports: [
@@ -29,9 +32,10 @@ import { RecoleccionModule } from './recoleccion/recoleccion.module';
       /* migrationsTableName: "custom_migration_table", */
     }),
     RecoleccionModule,
+    RecoleccionMqttModule,
     
   ],
-  controllers: [AppController],
+  controllers: [AppController/* , RecoleccionMqttController */],
   providers: [AppService],
 })
 export class AppModule {}

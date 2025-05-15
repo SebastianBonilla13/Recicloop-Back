@@ -6,6 +6,7 @@ import { Recoleccion } from './entities/recoleccion.entity';
 import { Repository } from 'typeorm';
 import { DetalleRecoleccion } from './detalle-recoleccion/entities/detalle-recoleccion.entity';
 import { CreateDetalleRecoleccionDto } from './detalle-recoleccion/dto/create-detalle-recoleccion.dto';
+import { RecoleccionGateway } from './recoleccion.gateway';
 
 @Injectable()
 export class RecoleccionService {
@@ -15,7 +16,10 @@ export class RecoleccionService {
     private readonly recoleccionRepository: Repository<Recoleccion>,
 
     @InjectRepository(DetalleRecoleccion)
-    private readonly detalleRecoleccionRepository: Repository<DetalleRecoleccion>
+    private readonly detalleRecoleccionRepository: Repository<DetalleRecoleccion>,
+
+    private readonly recoleccionGateway: RecoleccionGateway, // Inyecta el gateway
+
   ) { }
 
   async create(createRecoleccionDto: CreateRecoleccionDto) {
@@ -65,11 +69,20 @@ export class RecoleccionService {
       puntosTotales: 0
     });
 
-    return await this.recoleccionRepository.save(nuevaRecoleccion);
+    console.log('ANTES DE BD');
+
+    await this.recoleccionRepository.save(nuevaRecoleccion);
+
+    // Emitir evento websocket
+    // Llamar al método del gateway
+    console.log('Llamando a emitirNuevaRecoleccion con:', nuevaRecoleccion);
+    this.recoleccionGateway.emitirNuevaRecoleccion(nuevaRecoleccion);
+
+    return nuevaRecoleccion;
   }
 
   // Agregar detalle de cada producto reciclado
-  async agregarDetalle(recoleccionId: number, detalleDto: CreateDetalleRecoleccionDto) {
+  async agregarDetalle(detalleDto: CreateDetalleRecoleccionDto) {
 
     // Verificar si la recolección está activa
     const recoleccion = await this.recoleccionRepository.findOne({
@@ -107,6 +120,23 @@ export class RecoleccionService {
     // Guardar Recolección actualizada
     await this.recoleccionRepository.save(recoleccion);
 
+    // ------------
+
+    // Detalle para WebSocket (sin obj Recoleccion)
+    const DetalleWebsocket = this.detalleRecoleccionRepository.create({
+      id: nuevoDetalle.id,
+      recoleccionId: nuevoDetalle.recoleccionId,
+      fechaHora: nuevoDetalle.fechaHora,
+      longitudProducto: nuevoDetalle.longitudProducto,
+      puntos: nuevoDetalle.puntos,
+      // Sin RecoleccionId
+    });
+
+    // Emitir evento websocket
+    this.recoleccionGateway.emitirNuevoDetalle(DetalleWebsocket);
+
+    // ------------
+
     return nuevoDetalle;
   }
 
@@ -126,7 +156,12 @@ export class RecoleccionService {
     recoleccion.fechaFin = new Date();
     recoleccion.completado = true;
 
-    return await this.recoleccionRepository.save(recoleccion);
+    const recoleccionFinalizada = await this.recoleccionRepository.save(recoleccion);
+
+    // Emitir evento websocket
+    this.recoleccionGateway.emitirFinalizarRecoleccion(recoleccionFinalizada);
+
+    return await recoleccionFinalizada;
   }
 }
 

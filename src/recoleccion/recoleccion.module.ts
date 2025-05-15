@@ -6,10 +6,12 @@ import { Type } from 'class-transformer';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Recoleccion } from './entities/recoleccion.entity';
 import { DetalleRecoleccion } from './detalle-recoleccion/entities/detalle-recoleccion.entity';
+import { RecoleccionGateway } from './recoleccion.gateway';
 
 @Module({
   controllers: [RecoleccionController],
-  providers: [RecoleccionService],
+  providers: [RecoleccionService, RecoleccionGateway],
   imports: [TypeOrmModule.forFeature([Recoleccion, DetalleRecoleccion])],
+  exports: [RecoleccionService], // Para Recoleccion MQTT
 })
 export class RecoleccionModule {}

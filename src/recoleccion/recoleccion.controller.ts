@@ -1,6 +1,5 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { RecoleccionService } from './recoleccion.service';
-import { CreateRecoleccionDto } from './dto/create-recoleccion.dto';
 import { UpdateRecoleccionDto } from './dto/update-recoleccion.dto';
 import { CreateDetalleRecoleccionDto } from './detalle-recoleccion/dto/create-detalle-recoleccion.dto';
 
@@ -8,10 +7,10 @@ import { CreateDetalleRecoleccionDto } from './detalle-recoleccion/dto/create-de
 export class RecoleccionController {
   constructor(private readonly recoleccionService: RecoleccionService) { }
 
-  @Post()
+  /* @Post()
   create(@Body() createRecoleccionDto: CreateRecoleccionDto) {
     return this.recoleccionService.create(createRecoleccionDto);
-  }
+  } */
 
   @Get()
   findAll() {
@@ -41,8 +40,8 @@ export class RecoleccionController {
   }
 
   @Post(':id/detalle')
-  async agregarDetalle(@Param('id') recoleccionId: number, @Body() detalleDto: CreateDetalleRecoleccionDto) {
-    return await this.recoleccionService.agregarDetalle(recoleccionId, detalleDto);
+  async agregarDetalle(@Param('id') @Body() detalleDto: CreateDetalleRecoleccionDto) {
+    return await this.recoleccionService.agregarDetalle(detalleDto);
   }
 
   @Post(':id/finalizar')
