@@ -15,9 +15,6 @@ export class UsuariosService {
     @InjectRepository(Usuario) // inyecta el repositorio de la entidad Usuario
     private readonly usuarioRepository: Repository<Usuario>, // define el tipo de repositorio
 
-    @InjectRepository(PuntoReciclaje)
-    private readonly puntoReciclajeRepository: Repository<PuntoReciclaje>,
-
     @InjectRepository(Recoleccion)
     private readonly recoleccionRepository: Repository<Recoleccion>,
   ) { }
@@ -49,11 +46,19 @@ export class UsuariosService {
 
   }
 
-  async findAll() {
+  /* async findAll() {
     return this.usuarioRepository.find();
-  }
+  } */
 
   async findOne(id: number) {
+    // 9999 1000000
+    if(id < 10000 || id > 99999) {
+
+      // retornar mensaje de error
+      return {"message": "El ID debe ser un número de 5 dígitos."};
+
+    }
+
     return await this.usuarioRepository.findOneBy({ id });
   }
 
