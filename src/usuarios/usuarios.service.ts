@@ -51,15 +51,16 @@ export class UsuariosService {
   } */
 
   async findOne(id: number) {
-    // 9999 1000000
-    if(id < 10000 || id > 99999) {
-
-      // retornar mensaje de error
+    
+    /* if(id < 10000 || id > 99999) {
       return {"message": "El ID debe ser un número de 5 dígitos."};
+    } */
 
+    if(!await this.usuarioRepository.findOneBy({ id })){
+      return {response: false}
     }
 
-    return await this.usuarioRepository.findOneBy({ id });
+    return {response: true}
   }
 
   async update(id: number, updateUsuarioDto: UpdateUsuarioDto) {
