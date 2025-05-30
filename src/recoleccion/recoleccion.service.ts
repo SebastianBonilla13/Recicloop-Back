@@ -7,6 +7,7 @@ import { Repository } from 'typeorm';
 import { DetalleRecoleccion } from './detalle-recoleccion/entities/detalle-recoleccion.entity';
 import { CreateDetalleRecoleccionDto } from './detalle-recoleccion/dto/create-detalle-recoleccion.dto';
 import { RecoleccionGateway } from './recoleccion.gateway';
+import { ExceptionsHandler } from '@nestjs/core/exceptions/exceptions-handler';
 
 @Injectable()
 export class RecoleccionService {
@@ -47,6 +48,19 @@ export class RecoleccionService {
 
   // Después de realizar la autenticación del usuario
   async iniciarRecoleccion(usuarioId: number, puntoReciclajeId: number) {
+    
+    // Verificar si el usuario existe
+    const usuario = await this.recoleccionRepository.findOneBy({ usuarioId });
+    if (!usuario) {
+      throw new NotFoundException('Usuario no encontrado');
+    }
+
+    // Verificar si el punto de reciclaje existe
+    const puntoReciclaje = await this.recoleccionRepository.findOneBy({ puntoReciclajeId });
+    if( !puntoReciclaje) {
+      throw new NotFoundException('Punto de reciclaje no encontrado');
+    }
+
     // Verificar si hay una recolección activa
     const recoleccionActiva = await this.recoleccionRepository.findOne({
       where: {
@@ -69,9 +83,7 @@ export class RecoleccionService {
       puntosTotales: 0
     });
 
-    console.log('ANTES DE BD');
-
-    await this.recoleccionRepository.save(nuevaRecoleccion);
+    await this.recoleccionRepository.save(nuevaRecoleccion)
 
     // Emitir evento websocket
     // Llamar al método del gateway
@@ -104,7 +116,6 @@ export class RecoleccionService {
       recoleccionId: detalleDto.recoleccionId,
       longitudProducto: detalleDto.longitudProducto,
       puntos: calcularPuntos(detalleDto.longitudProducto),
-
       fechaHora: new Date()
     });
 
