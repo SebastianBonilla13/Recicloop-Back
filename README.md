@@ -1,98 +1,99 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# ♻️ Recicloop – Punto Inteligente de Recolección de Botellas PET
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+> Prototipo IoT funcional que promueve el reciclaje automatizado mediante tecnologías web y dispositivos inteligentes, enfocado en entornos académicos.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+---
 
-## Description
+## 🧠 Descripción General
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+**Recicloop** es una solución IoT inicialmente pensada como proyecto personal y fue posteriormente desarrollado en el marco académico para la electiva de Desarrollo de Software - Web Semántica IoT. **Recicloop** es un proyecto que fomenta el reciclaje mediante un sistema inteligente de recolección de botellas plásticas PET. Integra software y hardware con tecnologías modernas para ofrecer una experiencia interactiva, automatizada y educativa.
 
-## Project setup
+---
 
-```bash
-$ pnpm install
-```
+## 🧪 Características
 
-## Compile and run the project
+- Permite el registro y autenticación de usuarios
+- Controla y automatiza el prototipo físico desde software
+- Muestra historial de reciclaje, perfil y progreso de usuarios
+- Visualiza la recolección en tiempo real
+- Asocia eventos físicos (botella ingresada, longitud) a eventos del sistema
+- Integra sistema de recompensas y gamificación
+- Muestra puntos de reciclaje en un mapa
+- Difunde noticias y contenido educativo
 
-```bash
-# development
-$ pnpm run start
+---
 
-# watch mode
-$ pnpm run start:dev
+## 🎯 Objetivos logrados
 
-# production mode
-$ pnpm run start:prod
-```
+Desarrollar un prototipo funcional de una máquina recolectora automática de botellas PET, conectada a una plataforma web que:
+- Identifica usuarios mediante un código único
+- Recolecta botellas y mide su longitud
+- Asigna puntos reciclables a la cuenta del usuario
+- Visualiza el historial (metadatos) de recolección
 
-## Run tests
+---
 
-```bash
-# unit tests
-$ pnpm run test
+## ⚙️ Arquitectura y Tecnologías
 
-# e2e tests
-$ pnpm run test:e2e
+| Capa              | Tecnología              |
+|-------------------|----------------------------------------|
+| Dispositivo IoT   | ESP32, sensores IR, ultrasónicos, servomotores, etc. |
+| Backend           | NestJS |
+| Frontend          | Angular (PWA) |
+| Base de Datos     | PostgreSQL                            |
+| Comunicación      | MQTT (Mosquitto), REST API y WebSockets                        |
+| Despliegue   | Cloudflare Tunnel en backend local              |
+---
 
-# test coverage
-$ pnpm run test:cov
-```
 
-## Deployment
+## 📦 Repositorios
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+- [Backend (NestJS)](https://github.com/SebastianBonilla13/Recicloop-Back)
+- [Frontend (Angular)](https://github.com/SebastianBonilla13/Recicloop-Front)
+- [Código Arduino (ESP32)](https://github.com/ader148/maquinaReciclajePET_IOT)
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+---
 
-```bash
-$ pnpm install -g mau
-$ mau deploy
-```
+## 🧱 Componentes del Prototipo
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+- Pantalla OLED
+- Teclado matricial 4x4
+- Sensores IR, ultrasónico y celda de carga
+- Banda transportadora con motorreductor y servomotores
+- Estructura física modular
 
-## Resources
+---
 
-Check out a few resources that may come in handy when working with NestJS:
+## 📌 Trabajo futuro
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+- Implementar registro de usuarios desde frontend
+- Uso de websockets en recolección en tiempo real
+- Conexión remota MQTT con servicios escalables
+- Implementar gamificación, tienda virtual, mapa y sección educativa
+- Desarrollar app móvil nativa con Ionic
+- Optimizar prototipo físico para uso prolongado y ambientes reales
 
-## Support
+---
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## 📸 Capturas
 
-## Stay in touch
+- App web:
+![111](https://github.com/user-attachments/assets/237bcb12-3f5a-4102-aa96-59af9be00500)
+---
+![222](https://github.com/user-attachments/assets/8d1deb36-ff30-42c3-9485-14258d8c283d)
+---
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+- Prototipo físico
+![prototipo-interior](https://github.com/user-attachments/assets/af194809-b1f2-4a40-90f9-f13487550aba)
+---
+![prototipo-exterior](https://github.com/user-attachments/assets/b35f7c7c-802b-42a5-8e70-1e27845514b1)
+---
 
-## License
+- Diagrama de arquitectura
+![arq](https://github.com/user-attachments/assets/816e0f58-e022-4e90-a9fc-fc3168e8e5c5)
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+---
+
+- Diagrama entidad-relación
+![diagrama e-r](https://github.com/user-attachments/assets/87856647-0b54-42de-a76e-26ddbc37a90b)
+---
